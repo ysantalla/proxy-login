@@ -1,0 +1,23 @@
+<div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center">
+  <div class="item" fxFlex="50%" [hidden]="!isLoggedIn">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>
+          <p>{{name}}</p>
+          <p>{{quota}} MB</p>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas #myChart></canvas>
+      </mat-card-content>
+      <mat-card-actions>
+        <div style="width: 50%">
+          <button mat-raised-button color="primary" (click)="logged()" aria-label="logged">
+            <mat-icon>lock_open</mat-icon>Salir</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>
