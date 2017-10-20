@@ -4,15 +4,22 @@ import { Injectable } from '@angular/core';
 export class JwtService {
 
   getToken(): string {
-    return window.localStorage.getItem('jwtTokenProxy');
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem('jwtTokenProxy');
+    }
   }
 
   saveToken(token: string): void {
-    window.localStorage.setItem('jwtTokenProxy', token);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('jwtTokenProxy', token);
+    }
   }
 
   destroyToken(): void {
-    window.localStorage.removeItem('jwtTokenProxy');
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem('jwtTokenProxy');
+    }
   }
 
 }
+

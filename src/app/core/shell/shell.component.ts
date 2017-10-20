@@ -9,11 +9,23 @@ import 'rxjs/add/operator/mergeMap';
 @Component({
   selector: 'app-shell',
   template: `
+    <br>
+    <br>
     <section>
-      <app-top-bar>
-      </app-top-bar>
+      <div class="container">
+          <div class="row justify-content-md-center">
+              <div class="col col-md-4">
+                  <div class="svglogo">
+                      <img src="../../assets/captiveportal-wifi.png" width="65%" height="65%">
+                  </div>
+              </div>
+          </div>
+      </div>
       <app-main-content>
       </app-main-content>
+      <br>
+      <app-top-bar>
+      </app-top-bar>
     </section>
   `,
   styles: []

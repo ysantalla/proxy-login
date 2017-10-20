@@ -10,33 +10,25 @@ import { Routes, RouterModule } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
-import { AuthGuard } from '../services/auth-guard.service';
-
-import {
-  MatToolbarModule,
-  MatIconModule,
-  MatMenuModule,
-  MatButtonModule
-} from '@angular/material';
+import { AuthGuardService } from '../services/auth-guard.service';
 
 
 const routes: Routes = [
   {
     path: 'login',
     loadChildren: './../+login/login.module#LoginModule',
-    //canActivate: [AuthGuard],
-    data: {title: 'Login'}
+    data: {title: 'Proxy UPR'}
   },
   {
     path: '',
     loadChildren: './../+status/status.module#StatusModule',
-    canLoad: [AuthGuard],
-    data: {title: 'Status'}
+    canLoad: [AuthGuardService],
+    data: {title: 'Estado'}
   },
   {
     path: 'about',
     loadChildren: './../+about/about.module#AboutModule',
-    data: {title: 'About'}
+    data: {title: 'Acerca de'}
   },
   { path: '**', redirectTo: '' }
 
@@ -46,24 +38,16 @@ const routes: Routes = [
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes),
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule
+    RouterModule.forRoot(routes)
   ],
   exports: [
     ShellComponent,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule
   ],
   declarations: [
     ShellComponent,
     TopBarComponent,
     MainContentComponent
   ],
-  providers: [ApiService, JwtService, UserService, AuthGuard]
+  providers: [ApiService, JwtService, UserService, AuthGuardService]
 })
 export class CoreModule { }

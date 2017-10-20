@@ -1,23 +1,26 @@
-<div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center">
-  <div class="item" fxFlex="50%" [hidden]="!isLoggedIn">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>
-          <p>{{name}}</p>
-          <p>{{quota}} MB</p>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <canvas #myChart></canvas>
-      </mat-card-content>
-      <mat-card-actions>
-        <div style="width: 50%">
-          <button mat-raised-button color="primary" (click)="logged()" aria-label="logged">
-            <mat-icon>lock_open</mat-icon>Salir</button>
+<section>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col col-md-4">
+                <h5 class="form-signin-heading">{{name}}</h5>
+                <p>{{quota}} Mb</p>
+            </div>
         </div>
-      </mat-card-actions>
-    </mat-card>
+    </div>
 
-  </div>
-</div>
+    <div class="container">
+
+        <div class="row justify-content-md-center">
+            <div class="col col-md-8">
+                <canvas #myChart></canvas>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="col col-md-4">
+                <button class="btn btn-success" (click)="logged()" aria-label="logged">Salir</button>
+            </div>
+        </div>  
+    </div>
+
+</section>

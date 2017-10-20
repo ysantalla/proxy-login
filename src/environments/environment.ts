@@ -4,6 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: true,
-  proxy_url: 'https://harbor.upr.edu.cu:8081/api'
+  production: false,
+  proxy_url: 'https://200.14.49.9:8081/api'
 };

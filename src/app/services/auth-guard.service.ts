@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { JwtService } from './jwt.service';
 
 @Injectable()
-export class AuthGuard implements CanLoad {
+export class AuthGuardService implements CanLoad {
 
   constructor(
     private router: Router,

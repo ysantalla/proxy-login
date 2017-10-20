@@ -2,26 +2,32 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-about',
-  template: `
-    <div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center">
-      <div class="item" fxFlex="50%">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <mat-card-title><h1>Acerca de</h1></mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <h2>Desarrollador backend</h2>
-              <h3><mat-icon>person</mat-icon>Ing. Luis Angel Méndez Gort</h3>
-              <a href="mailto:luis.mendez@upr.edu.cu"><mat-icon>email</mat-icon>luis.mendez@upr.edu.cu</a>
-            </mat-card-content>
-            <mat-card-content>
-              <h2>Desarrollador frontend</h2>
-              <h3><mat-icon>person</mat-icon>Ing. Yasmany Santalla Pereda</h3>
-              <a href="mailto:ysantalla@upr.edu.cu"><mat-icon>email</mat-icon>ysantalla@upr.edu.cu</a>
-            </mat-card-content>
-          </mat-card>
+  template: `    
+    <section>
+      <div class="container">
+          <div class="row">
+            <div class="col col-md-12">
+              <h3>Acerca de proxy-go v1.0.0</h3>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col col-md-12">
+              <h3>Desarrollador backend</h3>
+              <h5>Ing. Luis Angel Méndez Gort</h5>
+              <a href="mailto:luis.mendez@upr.edu.cu">luis.mendez@upr.edu.cu</a>                  
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col col-md-12">
+              <h3>Desarrollador frontend</h3>
+              <h5>Ing. Yasmany Santalla Pereda</h5>
+              <a href="mailto:ysantalla@upr.edu.cu">ysantalla@upr.edu.cu</a>                
+            </div>
+          </div>
       </div>
-    </div>
+    </section>
   `,
   styles: []
 })

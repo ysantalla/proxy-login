@@ -4,32 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from '../services/user.service';
 
-import { MatSnackBar } from '@angular/material';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styles: [`
-    .example-full-width {
-      width: 100%;
-    }
-
-    .example-card {
-      width: 40%;
-    }
-
-    .loading {
-      margin-top: 10%;
-      margin-left: 45%;
-    }
-
-    .mat-icon {
-      cursor: pointer;
-    }
-
-    .example-header-image {
-      background-image: url('./../../assets/captiveportal-wifi.png');
-      background-size: cover;
+    .input-group-addon {
+      style="cursor: pointer;
     }
   `]
 })
@@ -37,12 +17,13 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   hide = true;
+  error = false;
   loading = false;
+  class="form-control";
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private snackBar: MatSnackBar,
     private router: Router) {}
 
   ngOnInit() {
@@ -62,6 +43,9 @@ export class LoginComponent implements OnInit {
     const pass = this.loginForm.value.password;
 
     this.loading = true;
+    this.error = false;
+
+    this.loginForm.disable();
 
     this.userService.attemptAuth(user, pass)
         .subscribe(
@@ -71,7 +55,9 @@ export class LoginComponent implements OnInit {
           },
           err => {
             this.loading = false;
-            this.snackBar.open(err, 'X', {duration: 3000});
+            this.error = true;
+            this.loginForm.enable();
+            this.class = "form-control is-invalid";
           }
         );
   }

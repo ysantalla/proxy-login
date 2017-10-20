@@ -3,17 +3,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-main-content',
   template: `
-    <div class="container" fxLayout fxLayout.xs="row" fxLayoutAlign="center">
-      <div class="item" fxFlex="80%">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+    <section class="container">
+      <router-outlet></router-outlet>
+    </section>
   `,
-  styles: [`
-    .container {
-      padding: 2%;
-    }
-  `]
+  styles: []
 })
 export class MainContentComponent implements OnInit {
 

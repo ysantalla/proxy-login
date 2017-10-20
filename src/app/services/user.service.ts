@@ -28,6 +28,14 @@ export class UserService {
     this.jwtService.destroyToken();
   }
 
+  isAutenticated(): boolean {
+    if (this.jwtService.getToken()){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   attemptAuth(user: string, pass: string): Observable<any> {
     return this.apiService.post('/auth', {user: user, pass: pass})
       .map(
