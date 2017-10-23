@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  proxy_url: 'https://200.14.49.9:8081/api'
+  proxy_url: 'https://proxy-go.upr.edu.cu:8081/api'
 };
