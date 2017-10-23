@@ -19,9 +19,8 @@ export class ApiService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
-
-    if (this.jwtService.getToken()) {
-      headersConfig['authHd'] = `${this.jwtService.getToken()}`;
+    if (this.jwtService.getToken()){
+      headersConfig['authHd'] = this.jwtService.getToken();
     }
     return new Headers(headersConfig);
   }
@@ -43,17 +42,17 @@ export class ApiService {
       { headers: this.setHeaders() }
     )
     .catch(this.formatErrors)
-    .map((res: Response) => res);
+    .map((res: Response) => res.json()
+  );
   }
 
   post(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
-      `${environment.proxy_url}${path}`,
-      JSON.stringify(body),
+      `${environment.proxy_url}${path}`, body,
       { headers: this.setHeaders() }
     )
     .catch(this.formatErrors)
-    .map((res: Response) => res);
+    .map((res: Response) => res.json());
   }
 
   delete(path): Observable<any> {

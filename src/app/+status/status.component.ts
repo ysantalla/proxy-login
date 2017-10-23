@@ -36,7 +36,7 @@ export class StatusComponent implements OnInit {
 
                     this.isLoggedIn = true;
                     this.value = data.consumption / 1024 / 1024;
-                    this.name = data.name;
+                    //this.name = data.name;
                     this.username = data.userName;
                     this.quota = data.quota / 1024 / 1024;
                     const ctx = this.Chart.nativeElement.getContext('2d');

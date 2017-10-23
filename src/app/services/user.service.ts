@@ -18,9 +18,9 @@ export class UserService {
     private jwtService: JwtService
   ) {}
 
-  setAuth(user: User) {
+  setAuth(token: string) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
+    this.jwtService.saveToken(token);
   }
 
   purgeAuth() {
@@ -40,8 +40,7 @@ export class UserService {
     return this.apiService.post('/auth', {user: user, pass: pass})
       .map(
         data => {
-          const userAuth: User = {username: user, password: pass, token: data._body};
-          this.setAuth(userAuth);
+          this.setAuth(data.scrt);
           return data;
         }
       );

@@ -25,6 +25,14 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+        window: undefined,
+        document: undefined,
+        location: JSON.stringify({
+            protocol: 'http', // `http` or `https`
+            host: `localhost`,
+        })
+    }),
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?angular(\\|\/)core(.+)?/,
