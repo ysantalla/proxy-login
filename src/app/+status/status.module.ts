@@ -8,7 +8,9 @@ import { UserService } from '../services/user.service';
 
 import { 
   MatButtonModule,
-  MatIconModule } from '@angular/material';
+  MatIconModule,
+  MatSnackBarModule,
+  MatProgressSpinnerModule } from '@angular/material';
 
 const routes: Routes = [
   {
@@ -22,6 +24,8 @@ const routes: Routes = [
     CommonModule,
     MatButtonModule,
     MatIconModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
     RouterModule.forChild(routes),
   ],
   declarations: [StatusComponent],

@@ -8,6 +8,10 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
+.mat-progress-spinner > svg > circle {
+  fill: rgb(144, 207, 212);
+}
+
 
 /*Define the @font-face Material Icons*/
 @font-face {

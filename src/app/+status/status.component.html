@@ -1,4 +1,11 @@
 <div fxFlex="50" class="third">
-    <canvas width="600" #myChart></canvas>
+    <h2>Quota {{quota | number : "1.1-2"}} (Mb)</h2>
+    <h3>Consumo {{consumption | number : "1.1-2"}} (Mb)</h3>
 </div>
+
+<div fxFlex="50" class="third">
+    <mat-progress-spinner [value]="value" [diameter]="200" [strokeWidth]="200" [color]="color"></mat-progress-spinner>    
+</div>
+
 <button mat-raised-button color="primary" (click)="logged()" aria-label="logged"><mat-icon>lock_open</mat-icon>Salir</button>
+
