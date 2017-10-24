@@ -12,6 +12,14 @@ import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
 import { AuthGuardService } from '../services/auth-guard.service';
 
+import {
+  MatToolbarModule,
+  MatIconModule,
+  MatMenuModule,
+  MatButtonModule
+} from '@angular/material';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   {
@@ -38,10 +46,20 @@ const routes: Routes = [
   imports: [
     CommonModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    FlexLayoutModule,
     RouterModule.forRoot(routes)
   ],
   exports: [
     ShellComponent,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule,
+    FlexLayoutModule
   ],
   declarations: [
     ShellComponent,

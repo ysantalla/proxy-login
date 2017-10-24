@@ -6,6 +6,8 @@ import * as Chart from 'chart.js';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 
+import { Observable } from 'rxjs';
+
 @Component({
     selector: 'app-status',
     templateUrl: './status.component.html',
@@ -14,32 +16,29 @@ import { User } from '../models/user.model';
 export class StatusComponent implements OnInit {
 
     @ViewChild('myChart') Chart: ElementRef;
-    isLoggedIn = false;
-    color = 'Primary';
-    group = '';
-    value = 0;
-    name = '';
-    username = '';
+    color = '#00838F';
+    consumption = 0;
     quota = 0;
-
-    currentUser: User;
 
     constructor(
         private userService: UserService,
         private router: Router
-    ) { }
+    ) { 
+        
+    }
 
     ngOnInit() {
         this.userService.statusUser()
             .subscribe(
                 data => {
 
-                    this.isLoggedIn = true;
-                    this.value = data.consumption / 1024 / 1024;
-                    //this.name = data.name;
-                    this.username = data.userName;
+                    this.consumption = data.consumption / 1024 / 1024;
                     this.quota = data.quota / 1024 / 1024;
                     const ctx = this.Chart.nativeElement.getContext('2d');
+
+                    if ((this.consumption * 100 / this.quota) > 85) {
+                        this.color = '#E64643';
+                    }
 
                     const myChart = new Chart(ctx, {
                         type: 'pie',
@@ -48,8 +47,8 @@ export class StatusComponent implements OnInit {
                             datasets: [
                                 {
                                     label: 'Kuota',
-                                    backgroundColor: ['#3e95cd'],
-                                    data: [this.value, this.quota]
+                                    backgroundColor: [this.color],
+                                    data: [Math.round(this.consumption), Math.round(this.quota)]
                                 }
                             ]
                         },
@@ -57,7 +56,7 @@ export class StatusComponent implements OnInit {
                             legend: { display: true },
                             title: {
                                 display: true,
-                                text: `Consumo de Kuota del usuario ${this.username}`
+                                text: `Consumo de Kuota ${Math.round(this.quota)} mb`
                             }
                         }
                     });
@@ -76,6 +75,7 @@ export class StatusComponent implements OnInit {
                 },
                 err => {
                     console.log(err);
+                    this.router.navigateByUrl('login');
                 });
     }
 }

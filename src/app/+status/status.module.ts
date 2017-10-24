@@ -6,6 +6,10 @@ import { RouterModule, Routes } from '@angular/router/';
 import { StatusComponent } from './status.component';
 import { UserService } from '../services/user.service';
 
+import { 
+  MatButtonModule,
+  MatIconModule } from '@angular/material';
+
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +20,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MatButtonModule,
+    MatIconModule,
     RouterModule.forChild(routes),
   ],
   declarations: [StatusComponent],

@@ -49,9 +49,7 @@ export class UserService {
   statusUser(): Observable<any> {
     return this.apiService.get('/userStatus')
       .map(
-        data => {
-          return data;
-        }
+        data => data
       );
   }
 

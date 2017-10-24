@@ -1,26 +1,4 @@
-<section>
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col col-md-4">
-                <h5 class="form-signin-heading">{{name}}</h5>
-                <p>{{quota}} Mb</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-
-        <div class="row justify-content-md-center">
-            <div class="col col-md-8">
-                <canvas #myChart></canvas>
-            </div>
-        </div>
-
-        <div class="row justify-content-md-center">
-            <div class="col col-md-4">
-                <button class="btn btn-success" (click)="logged()" aria-label="logged">Salir</button>
-            </div>
-        </div>  
-    </div>
-
-</section>
+<div fxFlex="50" class="third">
+    <canvas width="600" #myChart></canvas>
+</div>
+<button mat-raised-button color="primary" (click)="logged()" aria-label="logged"><mat-icon>lock_open</mat-icon>Salir</button>
