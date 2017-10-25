@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
+
 @include mat-core();
 $primary: mat-palette($mat-cyan, 800);
 $accent:  mat-palette($mat-light-blue, 600, 100, 800);
@@ -8,68 +9,134 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
-.mat-progress-spinner > svg > circle {
-  fill: rgb(144, 207, 212);
+/*Define the @font-face MyriadPro*/
+@font-face {
+  font-family: 'MyriadPro-Light';
+  src: url('assets/fonts/upr/MyriadPro-Light.otf');
 }
 
+@font-face {
+  font-family: 'MyriadPro-Regular';
+  src: url('assets/fonts/upr/MyriadPro-Regular.otf');
+}
+
+@font-face {
+  font-family: 'MyriadPro-It';
+  src: url('assets/fonts/upr/MyriadPro-It.otf');
+}
+
+body {
+  font-family: 'MyriadPro-Light';
+}
+
+h1, h2, h3 {
+  line-height: 30px;
+}
+
+h1,h2,h3,h4,h5{
+  font-weight: 100;
+}
+
+h1{
+  font-family: 'MyriadPro-Light';
+  color: #333;
+  font-size: 28px;
+}
+
+h2{
+  font-family: 'MyriadPro-Light';
+  font-size: 22px;
+  color: #333;
+}
+
+h3{
+  font-family: 'MyriadPro-Regular';
+  font-size: 20px;
+}
+
+h4{
+  font-family: 'MyriadPro-Regular';
+  font-size: 18px;
+}
+
+h5{
+  font-family: 'MyriadPro-It';
+  font-size: 16px;
+}
+
+p, li, a, label{
+  font-family: 'MyriadPro-Light';
+  font-size: 20px;
+  color: #333;
+}
+
+a{
+  font-family: 'MyriadPro-Regular';
+  font-size: 16px;
+  cursor: hand;
+}
 
 /*Define the @font-face Material Icons*/
 @font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url('assets/fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
-    src: local('assets/fonts/Material Icons'),
-         local('assets/fonts/MaterialIcons-Regular'),
-         url('assets/fonts/MaterialIcons-Regular.woff2') format('woff2'),
-         url('assets/fonts/MaterialIcons-Regular.woff') format('woff'),
-         url('assets/fonts/MaterialIcons-Regular.ttf') format('truetype');
-  }
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-  
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-  
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-  
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-  
-  /* Rules for sizing the icon.*/
-  .material-icons.md-18 { font-size: 18px; }
-  .material-icons.md-24 { font-size: 24px; }
-  .material-icons.md-36 { font-size: 36px; }
-  .material-icons.md-48 { font-size: 48px; }
-  
-  /* Rules for using icons as black on a light background*/
-  .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-  .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
-  
-  /* Rules for using icons as white on a dark background.*/
-  .material-icons.md-light { color: rgba(255, 255, 255, 1); }
-  .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-  
-  body {
-      margin: 0px;
-  }
-  
-  .fill-remaining-space {
-    flex: 1 1 auto;
-  }
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('assets/fonts/Material Icons'),
+        local('assets/fonts/MaterialIcons-Regular'),
+        url('assets/fonts/MaterialIcons-Regular.woff2') format('woff2'),
+        url('assets/fonts/MaterialIcons-Regular.woff') format('woff'),
+        url('assets/fonts/MaterialIcons-Regular.ttf') format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+/* Rules for sizing the icon.*/
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background*/
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background.*/
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+body {
+    margin: 0px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.mat-progress-spinner > svg > circle {
+  fill: rgb(144, 207, 212);
+}

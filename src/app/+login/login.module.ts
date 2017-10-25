@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 
 import { 
-  MatProgressSpinnerModule,
+  MatProgressBarModule,
   MatInputModule,
   MatCardModule,
   MatSnackBarModule,
@@ -26,7 +26,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatInputModule,
     MatCardModule,
     MatSnackBarModule,

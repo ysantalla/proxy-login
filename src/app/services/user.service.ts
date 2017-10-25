@@ -53,12 +53,19 @@ export class UserService {
       );
   }
 
+  changeQuota(username: string, value: number): Observable<any> {
+    return this.apiService.put('/userStatus', {name: username, value: value})
+      .map(
+        data => data
+      );
+  }
+
   logoutUser(): Observable<any> {
     return this.apiService.delete('/auth')
       .map(
         data => {
           this.purgeAuth();
-          return data;
+          data;
         }
       );
   }
