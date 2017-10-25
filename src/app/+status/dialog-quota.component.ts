@@ -49,7 +49,7 @@ export class DialogQuota implements OnDestroy {
           this.snackBar.open('Quota reseteada', 'X', {duration: 3000});
       },
       err => {
-          this.snackBar.open('Error', 'X', {duration: 3000});
+          this.snackBar.open(err, 'X', {duration: 3000});
           console.log(err)
       }
     );
@@ -62,7 +62,7 @@ export class DialogQuota implements OnDestroy {
         this.snackBar.open('Quota cambiada', 'X', {duration: 3000});
       },
       err => {
-        this.snackBar.open('Error', 'X', {duration: 3000});
+        this.snackBar.open(err, 'X', {duration: 3000});
           console.log(err)
       }
     );

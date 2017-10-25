@@ -59,6 +59,6 @@ export class ApiService {
       { headers: this.setHeaders() }
     )
     .catch(this.formatErrors)
-    .map((res: Response) => res);
+    .map((res: Response) => res.json());
   }
 }
