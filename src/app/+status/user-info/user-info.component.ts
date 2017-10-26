@@ -22,7 +22,6 @@ export class UserInfoComponent implements OnInit {
         .subscribe(
         data => {
             this.user = data;
-            console.log(data);
         },
         err => {
             console.log(err);
