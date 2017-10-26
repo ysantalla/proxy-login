@@ -5,8 +5,3 @@ export class User {
     password?: string;
     quotaGroup: string;
 }
-
-export class LogRs {
-    scrt: string;
-    user: User;
-}

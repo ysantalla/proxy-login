@@ -46,8 +46,22 @@ export class UserService {
       );
   }
 
+  checkUser(): Observable<any> {
+    return this.apiService.get('/checkUser')
+      .map(
+        data => data
+      );
+  }
+
   statusUser(): Observable<any> {
     return this.apiService.get('/userStatus')
+      .map(
+        data => data
+      );
+  }
+
+  userInfo(): Observable<User> {
+    return this.apiService.get('/userInfo')
       .map(
         data => data
       );

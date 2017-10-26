@@ -1,10 +1,14 @@
+<div fxFlex="50" class="zero">
+    <app-user-info></app-user-info>
+</div>
+
 <div fxFlex="50" class="one">
-    <h2>Quota {{quota | number : "1.1-2"}} (Mb)</h2>
-    <h3>Consumo {{consumption | number : "1.1-2"}} (Mb)</h3>
+    <h3>Quota {{quota | number : "1.1-2"}} (Mb)</h3>
+    <h4>Consumo {{consumption | number : "1.1-2"}} (Mb)</h4>
 </div>
 
 <div fxFlex="50" class="two">
-    <mat-progress-spinner [value]="value" [diameter]="200" [strokeWidth]="200" [color]="color"></mat-progress-spinner>    
+    <mat-progress-spinner [value]="value" [diameter]="150" [strokeWidth]="150" [color]="color"></mat-progress-spinner>    
 </div>
 
 <div fxFlex="50" class="third">

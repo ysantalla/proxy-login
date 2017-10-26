@@ -50,7 +50,7 @@ export class StatusComponent implements OnInit, OnDestroy {
             err => {
                 this.router.navigateByUrl('login');
             }
-            );
+        );
     }
 
     openDialog(): void {

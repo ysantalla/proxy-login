@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router/';
 
 import { StatusComponent } from './status.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 import { DialogQuota } from './dialog-quota.component';
 
 import { UserService } from '../services/user.service';
@@ -37,7 +38,7 @@ const routes: Routes = [
     MatInputModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [StatusComponent, DialogQuota],
+  declarations: [StatusComponent, DialogQuota, UserInfoComponent],
   providers: [UserService],
   entryComponents: [DialogQuota]
 })
