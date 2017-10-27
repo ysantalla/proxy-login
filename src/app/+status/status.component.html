@@ -1,5 +1,5 @@
 <div fxFlex="50" class="zero">
-    <app-user-info></app-user-info>
+    <app-user-info [user]="user"></app-user-info>
 </div>
 
 <div fxFlex="50" class="one">
@@ -13,5 +13,5 @@
 
 <div fxFlex="50" class="third">
     <button mat-raised-button color="primary" (click)="logged()" aria-label="logged"><mat-icon>lock_open</mat-icon>Salir</button>    
-    <button mat-button (click)="openDialog()"><mat-icon>settings</mat-icon>Modificar Quota</button>
+    <button *ngIf="user.isAdmin" mat-button (click)="openDialog()"><mat-icon>settings</mat-icon>Modificar Quota</button>
 </div>

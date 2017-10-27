@@ -34,6 +34,12 @@ const routes: Routes = [
     data: {title: 'Estado'}
   },
   {
+    path: 'logout',
+    loadChildren: './../+logout/logout.module#LogoutModule',
+    canLoad: [AuthGuardService],
+    data: {title: 'Cerrar sesión'}
+  },
+  {
     path: 'about',
     loadChildren: './../+about/about.module#AboutModule',
     data: {title: 'Acerca de'}

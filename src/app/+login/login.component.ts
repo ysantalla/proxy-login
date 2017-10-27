@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
     this.userService.attemptAuth(user, pass)
         .subscribe(
           data => {
-            console.log(data);
             this.router.navigateByUrl('');
             this.loading = false;
           },

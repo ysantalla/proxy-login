@@ -26,6 +26,7 @@ export class StatusComponent implements OnInit, OnDestroy {
     quota = 0;
     value = 0;
     seconds = 10;
+    user: User = {name: "", username: "", isAdmin: false, quotaGroup: ""};    
 
     constructor(
         private userService: UserService,
@@ -49,6 +50,16 @@ export class StatusComponent implements OnInit, OnDestroy {
             },
             err => {
                 this.router.navigateByUrl('login');
+            }
+        );
+
+        this.userService.userInfo()
+            .subscribe(
+            data => {
+                this.user = data;
+            },
+            err => {
+                console.log(err);
             }
         );
     }
@@ -103,6 +114,8 @@ export class StatusComponent implements OnInit, OnDestroy {
         }
         else if (this.value >= 85) {
             this.color = 'warn';
+        } else {
+            this.color = 'primary';
         }
     }
 

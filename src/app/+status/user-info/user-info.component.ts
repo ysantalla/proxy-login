@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { UserService } from '../../services/user.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { User } from '../../models/user.model';
 
@@ -13,20 +11,13 @@ import { User } from '../../models/user.model';
 })
 export class UserInfoComponent implements OnInit {
 
-  user: User = {name: "", username: "", isAdmin: false, quotaGroup: ""};
+  @Input()
+  user: User;
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.userService.userInfo()
-        .subscribe(
-        data => {
-            this.user = data;
-        },
-        err => {
-            console.log(err);
-        }
-    );
+    
   }
 
 }
