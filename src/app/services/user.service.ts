@@ -46,12 +46,31 @@ export class UserService {
       );
   }
 
+  checkUser(): Observable<any> {
+    return this.apiService.get('/checkUser')
+      .map(
+        data => data
+      );
+  }
+
   statusUser(): Observable<any> {
     return this.apiService.get('/userStatus')
       .map(
-        data => {
-          return data;
-        }
+        data => data
+      );
+  }
+
+  userInfo(): Observable<User> {
+    return this.apiService.get('/userInfo')
+      .map(
+        data => data
+      );
+  }
+
+  changeQuota(username: string, value: number): Observable<any> {
+    return this.apiService.put('/userStatus', {name: username, value: value})
+      .map(
+        data => data
       );
   }
 
@@ -60,7 +79,7 @@ export class UserService {
       .map(
         data => {
           this.purgeAuth();
-          return data;
+          data;
         }
       );
   }

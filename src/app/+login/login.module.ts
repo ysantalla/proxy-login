@@ -6,6 +6,14 @@ import { RouterModule, Routes } from '@angular/router/';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 
+import { 
+  MatProgressBarModule,
+  MatInputModule,
+  MatCardModule,
+  MatSnackBarModule,
+  MatButtonModule,
+  MatIconModule } from '@angular/material';
+
 const routes: Routes = [
   {
     path: '',
@@ -18,6 +26,12 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
+    MatProgressBarModule,
+    MatInputModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatIconModule,
     ReactiveFormsModule
   ],
   declarations: [LoginComponent],

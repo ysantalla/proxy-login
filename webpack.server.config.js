@@ -29,8 +29,8 @@ module.exports = {
         window: undefined,
         document: undefined,
         location: JSON.stringify({
-            protocol: 'http', // `http` or `https`
-            host: `localhost`,
+            protocol: 'https', // `http` or `https`
+            host: `proxy-login.upr.edu.cu`,
         })
     }),
     new webpack.ContextReplacementPlugin(

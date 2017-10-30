@@ -37,13 +37,11 @@ export class ApiService {
 
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
-      `${environment.proxy_url}${path}`,
-      JSON.stringify(body),
+      `${environment.proxy_url}${path}`, body,
       { headers: this.setHeaders() }
     )
     .catch(this.formatErrors)
-    .map((res: Response) => res.json()
-  );
+    .map((res: Response) => res);
   }
 
   post(path: string, body: Object = {}): Observable<any> {
@@ -61,6 +59,6 @@ export class ApiService {
       { headers: this.setHeaders() }
     )
     .catch(this.formatErrors)
-    .map((res: Response) => res);
+    .map((res: Response) => res.json());
   }
 }

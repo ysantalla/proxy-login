@@ -1,46 +1,27 @@
-<div class="container">
+<div fxFlex="10" class="one">
     <form [formGroup]="loginForm" #f="ngForm" (ngSubmit)="onLogin()" class="example-form">
-        <div class="row justify-content-md-center">
-            <div class="col col-md-4">
-                <h3 class="form-signin-heading">Bienvenidos</h3>
-                <h5>al Proxy-UPR de la
-                    <br> Universidad de Pinar del Río</h5>
-                <div class="form-group">
-                    <input required type="text" [ngClass]="class" placeholder="Escriba su nombre de usuario" formControlName="username">
-                </div>
-                <div class="form-group">
-                    <div class="input-group mb-2 mb-sm-0">
-                        <input required [type]="hide ? 'password' : 'text'" [ngClass]="class" placeholder="Escriba su contraseña" formControlName="password">
-                        <div class="input-group-addon" style="cursor: pointer" (click)="hide = !hide">
-                            <span>{{!hide ? 'Ocultar' : 'Ver'}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div class="col col-md-4">
-                <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid" aria-label="login">Entrar</button>
-            </div>
-        </div>
+        <h3>Proxy UPR</h3>
+        <mat-form-field class="example-full-width">
+            <input matInput required type="text" placeholder="Usuario" formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input matInput required [type]="hide ? 'password' : 'text'" placeholder="Contraseña" formControlName="password">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+        <div class="example-full-width">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid" aria-label="login">
+                <mat-icon>lock</mat-icon>Entrar
+            </button>
+        </div>    
     </form>
 </div>
-
 <br>
-
-<div class="container">
-    <div class="row justify-content-md-center" [hidden]="!error">
-        <div class="col col-md-4 col-md-offset-4">
-            <div class="alert alert-danger" role="alert">
-                El usuario o la contraseña no son correctos
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-md-center" [hidden]="!loading">
-        <div class="col col-md-4 col-md-offset-4">
-            <div class="alert alert-info" role="alert">
-                Cargando...
-            </div>
+<br>
+<div fxFlex="100" class="one">
+    <div class="loading">
+        <div [hidden]="!loading">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         </div>
     </div>
 </div>

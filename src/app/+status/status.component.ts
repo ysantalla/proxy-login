@@ -1,81 +1,125 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import * as Chart from 'chart.js';
+import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
+
+import { DialogQuota } from './dialog-quota.component';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+
 
 @Component({
     selector: 'app-status',
     templateUrl: './status.component.html',
     styles: []
 })
-export class StatusComponent implements OnInit {
+export class StatusComponent implements OnInit, OnDestroy {
 
-    @ViewChild('myChart') Chart: ElementRef;
-    isLoggedIn = false;
-    color = 'Primary';
-    group = '';
-    value = 0;
-    name = '';
-    username = '';
+    subscription: Subscription;
+
+    color = 'primary';
+    consumption = 0;
     quota = 0;
-
-    currentUser: User;
+    value = 0;
+    seconds = 10;
+    user: User = {name: "", username: "", isAdmin: false, quotaGroup: ""};    
 
     constructor(
         private userService: UserService,
-        private router: Router
+        private router: Router,
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit() {
+        this.subscription = Observable
+            .interval(this.seconds * 1000)
+            .flatMap(data => this.userService.statusUser())
+            .subscribe(data => {
+                this.updateQuota(data, true);
+            });
+
         this.userService.statusUser()
             .subscribe(
+            data => {
+                this.updateQuota(data);
+            },
+            err => {
+                this.router.navigateByUrl('login');
+            }
+        );
+
+        this.userService.userInfo()
+            .subscribe(
+            data => {
+                this.user = data;
+            },
+            err => {
+                console.log(err);
+            }
+        );
+    }
+
+    openDialog(): void {
+        let dialogRef = this.dialog.open(DialogQuota);
+
+        dialogRef.afterClosed().subscribe(() => {
+            this.userService.statusUser()
+                .subscribe(
                 data => {
-
-                    this.isLoggedIn = true;
-                    this.value = data.consumption / 1024 / 1024;
-                    //this.name = data.name;
-                    this.username = data.userName;
-                    this.quota = data.quota / 1024 / 1024;
-                    const ctx = this.Chart.nativeElement.getContext('2d');
-
-                    const myChart = new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: ['Consumo (Mb)', 'Kuota (Mb)'],
-                            datasets: [
-                                {
-                                    label: 'Kuota',
-                                    backgroundColor: ['#3e95cd'],
-                                    data: [this.value, this.quota]
-                                }
-                            ]
-                        },
-                        options: {
-                            legend: { display: true },
-                            title: {
-                                display: true,
-                                text: `Consumo de Kuota del usuario ${this.username}`
-                            }
-                        }
-                    });
+                    this.updateQuota(data);
                 },
                 err => {
-                  this.router.navigateByUrl('login');
+                    this.router.navigateByUrl('login');
                 }
-            );
+                );
+        });
     }
 
     logged(): void {
         this.userService.logoutUser()
             .subscribe(
-                data => {
-                    this.router.navigateByUrl('login');
-                },
-                err => {
-                    console.log(err);
-                });
+            data => {
+                this.router.navigateByUrl('login');
+            },
+            err => {
+                this.router.navigateByUrl('login');
+            });
+    }
+
+    private updateQuota(data, flag: boolean = false): void {
+
+        if (((data.consumption / 1024 / 1024) - this.consumption) >= 1) {
+            if (flag) {
+                this.snackBar.open(`Consumido ${Math.round(data.consumption / 1024 / 1024 - this.consumption)} Mb en los últimos ${this.seconds} segundos.`, 'X', { duration: 3000 });
+            } else {
+                this.snackBar.open(`Quota consumida ${Math.round(data.consumption / 1024 / 1024 - this.consumption)} Mb`, 'X', { duration: 3000 });
+            }
+
+        } else if (data.quota - data.consumption <= 0) {
+            this.snackBar.open(`Quota consumida totalmente`, 'X', { duration: 3000 });
+            this.subscription.unsubscribe();
+        }
+
+        this.consumption = data.consumption / 1024 / 1024;
+        this.quota = data.quota / 1024 / 1024;
+        this.value = this.consumption * 100 / this.quota;
+
+        if (this.value > 60 && this.value < 85) {
+            this.color = 'accent';
+        }
+        else if (this.value >= 85) {
+            this.color = 'warn';
+        } else {
+            this.color = 'primary';
+        }
+    }
+
+    public ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

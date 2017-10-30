@@ -9,26 +9,27 @@ import 'rxjs/add/operator/mergeMap';
 @Component({
   selector: 'app-shell',
   template: `
+    <app-top-bar></app-top-bar>
     <br>
-    <br>
-    <section>
-      <div class="container">
-          <div class="row justify-content-md-center">
-              <div class="col col-md-4">
-                  <div class="svglogo">
-                      <img src="../../assets/captiveportal-wifi.png" width="65%" height="65%">
-                  </div>
-              </div>
-          </div>
+    <div fxLayout="row" fxLayoutAlign="center center">    
+      <div fxFlex="10" class="one">
+        <div class="svglogo">
+            <img width="" src="../../assets/captiveportal-wifi.png">
+        </div>
       </div>
+    </div>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="center center">    
       <app-main-content>
       </app-main-content>
-      <br>
-      <app-top-bar>
-      </app-top-bar>
-    </section>
+    </div>
   `,
-  styles: []
+  styles: [`
+    .svglogo > img {
+      width: 100%;
+      height: 100%;
+    }
+  `]
 })
 export class ShellComponent implements OnInit {
 
