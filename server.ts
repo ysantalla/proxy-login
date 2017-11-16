@@ -3,6 +3,9 @@ import 'reflect-metadata';
 import { renderModuleFactory } from '@angular/platform-server';
 import { enableProdMode } from '@angular/core';
 
+import * as https from "https";
+import * as fs from "fs";
+
 import * as express from 'express';
 import { join } from 'path';
 import { readFileSync } from 'fs';
@@ -13,7 +16,7 @@ enableProdMode();
 // Express server
 const app = express();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 444;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
 // Our index.html we'll use as our template
@@ -52,7 +55,15 @@ app.get('*', (req, res) => {
   res.render('index', { req });
 });
 
+/*
 // Start up the Node server
 app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);
 });
+*/
+
+https.createServer({ 
+  key: fs.readFileSync("./ssl/privkey1.pem"),
+  cert: fs.readFileSync("./ssl/fullchain1.pem"),
+  ca: fs.readFileSync("./ssl/chain1.pem")
+}, app).listen(PORT);	
