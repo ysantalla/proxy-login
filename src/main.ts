@@ -1,3 +1,4 @@
+import 'hammerjs';
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -8,6 +9,5 @@ if (environment.production) {
   enableProdMode();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic().bootstrapModule(AppModule);
-});
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
