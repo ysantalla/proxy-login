@@ -2,11 +2,11 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Token } from '@app/core/models/token.model';
-import { Role, User } from '@app/core/models/user.model';
-
+import { User, Role } from '../models/user.model';
+import { Token } from '../models/token.model';
 
 const TOKEN_PREFIX = 'TOKEN';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,20 @@ const TOKEN_PREFIX = 'TOKEN';
 export class AuthService {
 
   private tokenGetter: string = null;
-  private _isAuthenticated = new BehaviorSubject(false);
-  private _user = new BehaviorSubject(null);
-  private _token = new BehaviorSubject('');
+  private isAuthenticated$ = new BehaviorSubject(false);
+  private user$ = new BehaviorSubject(null);
+  private token$ = new BehaviorSubject('');
 
   constructor(
     private localStorageService: LocalStorageService,
   ) {
     this.tokenGetter =  this.localStorageService.getItem(TOKEN_PREFIX);
+
     if (this.isLoggedIn()) {
       const token: Token = this.decodeToken(this.tokenGetter);
-      this._token.next(this.tokenGetter);
-      this._user.next(token.user);
-      this._isAuthenticated.next(true);
+      this.token$.next(this.tokenGetter);
+      this.user$.next(token.user);
+      this.isAuthenticated$.next(true);
     }
   }
 
@@ -35,30 +36,30 @@ export class AuthService {
   }
 
   public getUser(): User {
-    return this._user.getValue();
+    return this.user$.getValue();
   }
 
   public getAsyncUser(): Observable<User> {
-    return this._user.asObservable();
+    return this.user$.asObservable();
   }
 
   public getTokenAsync(): Promise<string> {
-    return this._token.toPromise();
+    return this.token$.toPromise();
   }
 
   public getRoles(): Role[] {
-    if (this._user.getValue()) {
-      return this._user.getValue().roles;
+    if (this.user$.getValue()) {
+      return this.user$.getValue().roles;
     }
     return [];
   }
 
   public getTokenn(): Observable<string> {
-    return this._token.asObservable();
+    return this.token$.asObservable();
   }
 
   public isAuthenticated(): Observable<boolean> {
-    return this._isAuthenticated.asObservable();
+    return this.isAuthenticated$.asObservable();
   }
 
   public isLoggedIn(): boolean {
@@ -74,14 +75,16 @@ export class AuthService {
   public login(body: any): void {
     this.localStorageService.setItem(TOKEN_PREFIX, body.token);
     this.tokenGetter = body.token;
-    this._user.next(body.user);
-    this._isAuthenticated.next(true);
+    this.user$.next(body.user);
+    this.isAuthenticated$.next(true);
   }
 
   public logout(): void {
     this.localStorageService.removeItem(TOKEN_PREFIX);
-    this._isAuthenticated.next(false);
-    this._user.next(null);
+    this.isAuthenticated$.next(false);
+    this.user$.next(null);
+
+    // reset the store after that
   }
 
   private urlBase64Decode(str: string): string {

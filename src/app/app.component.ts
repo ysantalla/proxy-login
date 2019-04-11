@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
 
+  envName = env.envName;
   appName = env.appName;
 
   constructor(
@@ -34,4 +35,3 @@ export class AppComponent implements OnInit {
       });
   }
 }
-

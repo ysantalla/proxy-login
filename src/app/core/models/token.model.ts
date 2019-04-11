@@ -1,4 +1,4 @@
-import { User } from '@app/core/models/user.model';
+import { User } from './user.model';
 
 export interface Token {
     user: User;

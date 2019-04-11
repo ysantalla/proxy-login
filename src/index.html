@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <meta charset="utf-8">
   <title>Client</title>
   <base href="/">
@@ -22,6 +22,7 @@
       justify-content: center;
       height: 100%;
     }
+
     .app-loading .spinner {
       height: 200px;
       width: 200px;
@@ -34,6 +35,7 @@
       right: 0;
       margin: auto;
     }
+
     .app-loading .spinner .path {
       stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
@@ -41,11 +43,13 @@
       stroke-linecap: round;
       stroke: #ddd;
     }
+
     @keyframes rotate {
       100% {
         transform: rotate(360deg);
       }
     }
+
     @keyframes dash {
       0% {
         stroke-dasharray: 1, 200;

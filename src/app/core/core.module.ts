@@ -5,13 +5,10 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import {
   HttpClientModule,
 } from '@angular/common/http';
 
-import { environment as env } from '@env/environment';
-import { AuthService } from '@app/core/services/auth.service';
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { RoleGuard } from '@app/core/guards/role.guard';
 
@@ -23,8 +20,7 @@ import { RoleGuard } from '@app/core/guards/role.guard';
   ],
   providers: [
     AuthGuard,
-    RoleGuard,
-    AuthService,
+    RoleGuard
   ],
   declarations: []
 })
@@ -40,4 +36,3 @@ export class CoreModule {
     }
   }
 }
-

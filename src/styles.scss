@@ -3,6 +3,13 @@
 
 @include mat-core();
 
+$primary: mat-palette($mat-indigo, 800, 300, 900);
+$accent: mat-palette($mat-light-blue);
+$warn:    mat-palette($mat-red);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
 $custom-typography: mat-typography-config(
     $font-family: 'Roboto, monospace',
     $headline: mat-typography-level(32px, 48px, 700),
@@ -14,6 +21,71 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 mat-form-field.mat-form-field {
   font-size: 18px;
+}
+
+.menu {
+  border-left: 4px solid mat-color($accent);
+}
+
+.mat-nav-list .mat-list-item, .mat-expansion-panel-header {
+  background: #fafafa00;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  background:#fafafa!important;
+}
+
+div.mat-expansion-panel-body {
+  padding: 3px 0px 3px!important;
+}
+
+.active {
+  border-left: 4px solid mat-color($primary);
+}
+
+.mat-warn {
+  color: mat-color($warn);
+}
+
+.mat-accent {
+  color: mat-color($accent);
+}
+
+div.container > div.loading, div.loading {
+  height: 10px;
+}
+
+.info {
+  padding: 1%;
+}
+
+.loading-shade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 200;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.create-button {
+  z-index: 1024;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-drawer, .mat-drawer-inner-container {
+  overflow-x: hidden!important;
+}
+
+.table-footer {
+  background-color: white;
+  padding: 3px 3px 7px 7px;
 }
 
 /*Define the @font-face Material Icons*/

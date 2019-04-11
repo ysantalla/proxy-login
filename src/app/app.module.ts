@@ -13,6 +13,8 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
+import { AuthGuard } from '@app/core/guards/auth.guard';
+
 
 const routes: Routes = [
   {
@@ -20,11 +22,17 @@ const routes: Routes = [
     loadChildren: './views/+auth/auth.module#AuthModule',
   },
   {
-    path: '',
-    loadChildren: './views/+home/home.module#HomeModule'
+    path: 'dashboard',
+    loadChildren: './views/+dashboard/dashboard.module#DashboardModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'error',
+    loadChildren: './views/+error/error.module#ErrorModule',
   },
   { path: '**', redirectTo: 'error/unauthorized' }
 ];
+
 
 
 @NgModule({
@@ -32,7 +40,7 @@ const routes: Routes = [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     CoreModule,
     SharedModule.forRoot(),
     BrowserAnimationsModule,
@@ -45,4 +53,3 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-

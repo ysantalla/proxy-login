@@ -1,0 +1,32 @@
+<div class="grid-container">
+  <div class="container" *ngIf="(isAdmin$ | async)" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+    <div class="item mat-elevation-z8" fxFlex="33%" fxFlex.xs="90%" fxFlex.md="90%">
+
+        <mat-toolbar class="card-toolbar" color="accent">
+            <mat-toolbar-row>
+              Usuarios
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+        <mat-card class="dashboard-card">
+          <mat-card-content class="dashboard-card-content">
+          </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="item mat-elevation-z8" fxFlex="33%" fxFlex.xs="90%" fxFlex.md="90%">
+
+        <mat-toolbar class="card-toolbar" color="accent">
+            <mat-toolbar-row>
+              Roles
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+        <mat-card class="dashboard-card">
+          <mat-card-content class="dashboard-card-content">
+          </mat-card-content>
+        </mat-card>
+    </div>
+
+  <br/>
+
+</div>
