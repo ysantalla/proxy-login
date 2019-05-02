@@ -20,7 +20,7 @@ export class RoleGuard implements CanActivate {
     // this will be passed from the route config
     // on the data property
     const expectedRole: any[] = route.data.expectedRole;
-    const roles: any[] = this.authService.getRoles();
+    const roles: any[] = []//this.authService.getRoles();
 
     if (!roles) {
       this.authService.logout();
@@ -29,7 +29,7 @@ export class RoleGuard implements CanActivate {
       return false;
     }
 
-    if (!this.authService.isLoggedIn() || (!expectedRole.some(role => roles.some(p => p.name === role)))) {
+    if (!this.authService.authenticated() || (!expectedRole.some(role => roles.some(p => p.name === role)))) {
       this.authService.logout();
       this.router.navigate(['auth/login']);
       this.snackBar.open('No tiene permisos', 'X', {duration: 3000});

@@ -9,6 +9,8 @@
 /node_modules
 package-lock.json
 
+pmproxy
+
 # IDEs and editors
 /.idea
 .project

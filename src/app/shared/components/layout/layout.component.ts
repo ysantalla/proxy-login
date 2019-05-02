@@ -10,7 +10,6 @@ import { routerTransition } from '@app/core/animations/router.transition';
 import { environment as env } from '@env/environment';
 
 import { Menu } from '@app/core/models/menu.model';
-import { User } from '@app/core/models/user.model';
 
 
 @Component({
@@ -29,9 +28,7 @@ import { User } from '@app/core/models/user.model';
           <span>{{appName}}</span>
         </mat-toolbar>
 
-        <app-nav-menu *ngIf="isLoggedIn$ | async" [items]="dashboard"></app-nav-menu>
-
-        <app-nav-menu *ngIf="(isLoggedIn$ | async) && (isAdmin$ | async)" [items]="adminMenu"></app-nav-menu>
+        <app-nav-menu [items]="dashboard"></app-nav-menu>
 
       </mat-sidenav>
       <mat-sidenav-content>
@@ -50,7 +47,7 @@ import { User } from '@app/core/models/user.model';
             <span class="spacer"></span>
 
             <button mat-button [matMenuTriggerFor]="menu">
-              <span *ngIf="isLoggedIn$ | async">Bienvenido {{(user$ | async).firstname}}</span>
+              <span *ngIf="(isLoggedIn$ | async)">Bienvenido {{username$ | async}}</span>
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -173,11 +170,9 @@ import { User } from '@app/core/models/user.model';
 export class LayoutComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>;
-  user$: Observable<User>;
-  isAdmin$: Observable<boolean>;
+  username$: Observable<string>;
 
   dashboard: Menu;
-  adminMenu: Menu;
 
   envName = env.envName;
   appName = env.appName;
@@ -202,7 +197,7 @@ export class LayoutComponent implements OnInit {
       pages: []
     };
 
-    this.adminMenu = {
+    /*this.adminMenu = {
       heading: 'Administración',
       icon: 'settings',
       pages: [
@@ -222,18 +217,12 @@ export class LayoutComponent implements OnInit {
           icon: 'folder'
         }
       ]
-    };
+    };*/
   }
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isAuthenticated();
-    this.user$ = this.authService.getAsyncUser();
-
-    this.user$.subscribe(user => {
-      if (user) {
-        this.isAdmin$ = new BehaviorSubject(user.roles.some(role => role.name === 'ADMIN')).asObservable();
-      }
-    });
+    this.username$ = this.authService.getUsername();
   }
 
   logout(): void {

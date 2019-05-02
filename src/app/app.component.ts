@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private titleService: Title
+    private titleService: Title,
   ) {}
 
   ngOnInit(): void {

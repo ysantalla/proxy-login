@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -26,11 +27,12 @@ import { of } from 'rxjs';
             <h1 class="mat-h1">Iniciar Sesión</h1>
             <mat-card-content>
               <mat-form-field class="full-width">
-                <input matInput required type="text" placeholder="Usuario UPR" formControlName="username">
+                <input matInput required type="text" placeholder="Usuario UPR" formControlName="user">
               </mat-form-field>
 
               <mat-form-field class="full-width">
-                  <input matInput history="false" required [type]="hide ? 'password' : 'text'" placeholder="Contraseña" formControlName="password">
+                  <input matInput history="false" required
+                          [type]="hide ? 'password' : 'text'" placeholder="Contraseña" formControlName="pass">
                   <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
               </mat-form-field>
             </mat-card-content>
@@ -83,8 +85,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      user: ['', Validators.required],
+      pass: ['', Validators.required]
     });
   }
 
@@ -94,7 +96,18 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.loginForm.disable();
 
-
+      this.authService.login(this.loginForm.value.user, this.loginForm.value.pass).subscribe(data => {
+        this.loading = false;
+        if (data) {
+          this.authService.setToken(data);
+        } else {
+          this.snackBar.open('Error', 'X', {duration: 3000});
+        }
+      }, (error: HttpErrorResponse) => {
+        this.loginForm.enable();
+        this.loading = false;
+        this.snackBar.open(error.error, 'X', {duration: 3000});
+      });
 
     } else {
       this.loading = false;

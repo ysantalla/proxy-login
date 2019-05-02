@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlProxy: 'https://200.14.49.3/',
+  urlProxy: 'https://localhost:4443/api/cmd',
   envName: 'Development',
   appName: 'PROXY-GO'
 };

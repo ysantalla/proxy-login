@@ -1,9 +1,11 @@
 // tslint:disable:no-bitwise
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { User, Role } from '../models/user.model';
-import { Token } from '../models/token.model';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { environment as env } from '@env/environment';
 
 const TOKEN_PREFIX = 'TOKEN';
 
@@ -13,78 +15,86 @@ const TOKEN_PREFIX = 'TOKEN';
 })
 export class AuthService {
 
-  private tokenGetter: string = null;
   private isAuthenticated$ = new BehaviorSubject(false);
-  private user$ = new BehaviorSubject(null);
   private token$ = new BehaviorSubject('');
+  private username$ = new BehaviorSubject('');
 
   constructor(
     private localStorageService: LocalStorageService,
+    private httpClient: HttpClient
   ) {
-    this.tokenGetter =  this.localStorageService.getItem(TOKEN_PREFIX);
+    this.token$.next(this.localStorageService.getItem(TOKEN_PREFIX));
 
-    if (this.isLoggedIn()) {
-      const token: Token = this.decodeToken(this.tokenGetter);
-      this.token$.next(this.tokenGetter);
-      this.user$.next(token.user);
+    this.isLoggedIn().subscribe(login => {
+      if (login === 'true') {
+        this.isAuthenticated$.next(true);
+        this.setUsername();
+      }
+    });
+  }
+
+  public setToken(token: string): void {
+    if (token) {
+      this.localStorageService.setItem(TOKEN_PREFIX, token);
+      this.token$.next(token);
+      this.setUsername();
       this.isAuthenticated$.next(true);
+    } else {
+      console.log('Token not found');
     }
-  }
-
-  public getToken(): string {
-    return this.tokenGetter;
-  }
-
-  public getUser(): User {
-    return this.user$.getValue();
-  }
-
-  public getAsyncUser(): Observable<User> {
-    return this.user$.asObservable();
   }
 
   public getTokenAsync(): Promise<string> {
     return this.token$.toPromise();
   }
 
-  public getRoles(): Role[] {
-    if (this.user$.getValue()) {
-      return this.user$.getValue().roles;
-    }
-    return [];
-  }
-
   public getTokenn(): Observable<string> {
     return this.token$.asObservable();
+  }
+
+  private setUsername(): void {
+    const decodeToken: any = this.decodeToken(this.token$.value);
+    if (decodeToken) {
+      this.username$.next(decodeToken.user);
+    }
+  }
+
+  public getUsername(): Observable<string> {
+    return this.username$.asObservable();
   }
 
   public isAuthenticated(): Observable<boolean> {
     return this.isAuthenticated$.asObservable();
   }
 
-  public isLoggedIn(): boolean {
-    if (!this.tokenGetter) {
-      return false;
-    }
-    if (!this.isTokenExpired(this.tokenGetter)) {
-      return true;
-    }
-    return false;
+  public authenticated(): boolean {
+    return this.isAuthenticated$.value;
   }
 
-  public login(body: any): void {
-    this.localStorageService.setItem(TOKEN_PREFIX, body.token);
-    this.tokenGetter = body.token;
-    this.user$.next(body.user);
-    this.isAuthenticated$.next(true);
+  public isLoggedIn(): Observable<string> {
+    return this.httpClient.post<string>(env.urlProxy, {cmd: 'discover', manager: 'resources'}).pipe(
+      map((data: any) => {
+        return data.result;
+      })
+    );
+  }
+
+  public login(user: string, pass: string): Observable<any> {
+    const requestOptions: any = {
+      /* other options here */
+      responseType: 'text'
+    };
+
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'open', manager: 'sessions', cred: {user: user, pass: pass}},
+        requestOptions);
   }
 
   public logout(): void {
-    this.localStorageService.removeItem(TOKEN_PREFIX);
-    this.isAuthenticated$.next(false);
-    this.user$.next(null);
-
-    // reset the store after that
+    this.httpClient.post<any>(env.urlProxy, {cmd: 'close', manager: 'sessions', secret: this.token$.value}).subscribe(data => {
+      this.localStorageService.removeItem(TOKEN_PREFIX);
+      this.isAuthenticated$.next(false);
+      this.username$.next('');
+    });
   }
 
   private urlBase64Decode(str: string): string {
@@ -155,7 +165,7 @@ export class AuthService {
     );
   }
 
-  public decodeToken(token: string = this.getToken()) {
+  public decodeToken(token: string = this.token$.value) {
     if (token === null) {
       return null;
     }
@@ -175,7 +185,7 @@ export class AuthService {
     return JSON.parse(decoded);
   }
 
-  public getTokenExpirationDate(token: string = this.getToken()): Date | null {
+  public getTokenExpirationDate(token: string = this.token$.value): Date | null {
     let decoded: any;
     decoded = this.decodeToken(token);
 
@@ -189,7 +199,7 @@ export class AuthService {
     return date;
   }
 
-  public isTokenExpired(token: string = this.getToken(), offsetSeconds?: number): boolean {
+  public isTokenExpired(token: string = this.token$.value, offsetSeconds?: number): boolean {
     if (token === null || token === '') {
         return true;
     }
