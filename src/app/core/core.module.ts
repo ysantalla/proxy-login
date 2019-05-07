@@ -10,7 +10,9 @@ import {
 } from '@angular/common/http';
 
 import { AuthGuard } from '@app/core/guards/auth.guard';
-import { RoleGuard } from '@app/core/guards/role.guard';
+import { AuthService } from './services/auth.service';
+import { ApiService } from './services/api.service';
+import { RedirectGuard } from './guards/redirect.guard';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { RoleGuard } from '@app/core/guards/role.guard';
   ],
   providers: [
     AuthGuard,
-    RoleGuard
+    RedirectGuard,
+    AuthService,
+    ApiService
   ],
   declarations: []
 })

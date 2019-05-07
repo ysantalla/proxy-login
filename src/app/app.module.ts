@@ -18,6 +18,10 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: './views/+auth/auth.module#AuthModule',
+  },
+  {
     path: 'auth',
     loadChildren: './views/+auth/auth.module#AuthModule',
   },

@@ -7,17 +7,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { ProfileComponent } from './profile/profile.component';
+import { RedirectGuard } from '@app/core/guards/redirect.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
-    data: {title: 'Iniciar Sesión'}
+    data: {title: 'Iniciar Sesión'},
+    canActivate: [RedirectGuard]
   },
   {
     path: 'login',
     component: LoginComponent,
-    data: {title: 'Iniciar Sesión'}
+    data: {title: 'Iniciar Sesión'},
+    canActivate: [RedirectGuard]
   },
   {
     path: 'profile',

@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ApiService } from '@app/core/services/api.service';
 
 
 @Component({
@@ -80,7 +81,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private apiService: ApiService
   ) { }
 
   ngOnInit() {
@@ -96,12 +98,19 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.loginForm.disable();
 
-      this.authService.login(this.loginForm.value.user, this.loginForm.value.pass).subscribe(data => {
+      this.apiService.login(this.loginForm.value.user, this.loginForm.value.pass).subscribe(token => {
         this.loading = false;
-        if (data) {
-          this.authService.setToken(data);
+        if (token) {
+
+          this.apiService.dicover().subscribe((dataDiscover: any) => {
+            console.log(dataDiscover);
+            this.authService.login(token);
+            this.router.navigate(['dashboard']);
+          });
+
         } else {
-          this.snackBar.open('Error', 'X', {duration: 3000});
+          this.snackBar.open('Error, volver a intentar', 'X', {duration: 3000});
+          this.loginForm.enable();
         }
       }, (error: HttpErrorResponse) => {
         this.loginForm.enable();

@@ -1,11 +1,9 @@
 // tslint:disable:no-bitwise
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment as env } from '@env/environment';
+import { ApiService } from './api.service';
 
 const TOKEN_PREFIX = 'TOKEN';
 
@@ -21,46 +19,28 @@ export class AuthService {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private httpClient: HttpClient
+    private apiService: ApiService
   ) {
-    this.token$.next(this.localStorageService.getItem(TOKEN_PREFIX));
 
-    this.isLoggedIn().subscribe(login => {
-      if (login === 'true') {
-        this.isAuthenticated$.next(true);
-        this.setUsername();
+    this.apiService.dicover().subscribe((data: any) => {
+      if (data.result === 'true') {
+        const decodeToken: any = this.decodeToken(this.localStorageService.getItem(TOKEN_PREFIX));
+        if (decodeToken) {
+          this.username$.next(decodeToken.user);
+          this.isAuthenticated$.next(true);
+        } else {
+          this.isAuthenticated$.next(false);
+        }
       }
     });
   }
 
-  public setToken(token: string): void {
-    if (token) {
-      this.localStorageService.setItem(TOKEN_PREFIX, token);
-      this.token$.next(token);
-      this.setUsername();
-      this.isAuthenticated$.next(true);
-    } else {
-      console.log('Token not found');
-    }
-  }
-
-  public getTokenAsync(): Promise<string> {
-    return this.token$.toPromise();
-  }
-
-  public getTokenn(): Observable<string> {
-    return this.token$.asObservable();
-  }
-
-  private setUsername(): void {
-    const decodeToken: any = this.decodeToken(this.token$.value);
-    if (decodeToken) {
-      this.username$.next(decodeToken.user);
-    }
-  }
-
   public getUsername(): Observable<string> {
     return this.username$.asObservable();
+  }
+
+  public getToken(): string {
+    return this.localStorageService.getItem(TOKEN_PREFIX);
   }
 
   public isAuthenticated(): Observable<boolean> {
@@ -71,30 +51,22 @@ export class AuthService {
     return this.isAuthenticated$.value;
   }
 
-  public isLoggedIn(): Observable<string> {
-    return this.httpClient.post<string>(env.urlProxy, {cmd: 'discover', manager: 'resources'}).pipe(
-      map((data: any) => {
-        return data.result;
-      })
-    );
-  }
-
-  public login(user: string, pass: string): Observable<any> {
-    const requestOptions: any = {
-      /* other options here */
-      responseType: 'text'
-    };
-
-    return this.httpClient.post<any>(env.urlProxy, {cmd: 'open', manager: 'sessions', cred: {user: user, pass: pass}},
-        requestOptions);
+  public login(token: string): string {
+    if (this.isTokenExpired()) {
+      this.localStorageService.setItem(TOKEN_PREFIX, token);
+      const decodeToken: any = this.decodeToken(token);
+      this.username$.next(decodeToken.user);
+      this.isAuthenticated$.next(true);
+      return 'Loggin successful';
+    } else {
+      return 'Token expired';
+    }
   }
 
   public logout(): void {
-    this.httpClient.post<any>(env.urlProxy, {cmd: 'close', manager: 'sessions', secret: this.token$.value}).subscribe(data => {
-      this.localStorageService.removeItem(TOKEN_PREFIX);
-      this.isAuthenticated$.next(false);
-      this.username$.next('');
-    });
+    this.localStorageService.removeItem(TOKEN_PREFIX);
+    this.isAuthenticated$.next(false);
+    this.username$.next('');
   }
 
   private urlBase64Decode(str: string): string {

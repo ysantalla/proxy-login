@@ -4,15 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 
 import { IndexComponent } from './index/index.component';
-import { RoleGuard } from '@app/core/guards/role.guard';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 
 
 const routes: Routes = [
   {
     path: '',
     component: IndexComponent,
-    data: {title: 'Escritorio', expectedRole: ['ADMIN', 'ESPECIALISTA', 'JPROYECTO', 'PROFESOR']},
-    canActivate: [RoleGuard]
+    data: {title: 'Escritorio'},
+    canActivate: [AuthGuard]
   }
 ];
 
