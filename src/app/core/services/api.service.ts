@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { environment as env } from '@env/environment';
@@ -25,6 +25,10 @@ export class ApiService {
 
     return this.httpClient.post<any>(env.urlProxy, {cmd: 'open', manager: 'sessions', cred: {user: user, pass: pass}},
         requestOptions);
+  }
+
+  public comandGet(manager: string, token: string): Observable<any> {
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'get', manager: manager, secret: token});
   }
 
   public logout(token: string): Observable<any> {

@@ -17,12 +17,10 @@ export class RedirectGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
 
-    console.log(this.authService.authenticated());
-
     if (this.authService.authenticated()) {
       this.router.navigate(['dashboard']);
       return false;
     }
-        return true;
+      return true;
   }
 }

@@ -4,8 +4,10 @@ import { LocalStorageService } from '@app/core/services/local-storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const TOKEN_PREFIX = 'TOKEN';
+const DOWNLOAD_MANAGER = 'DOWNLOAD_MANAGER';
 
 
 @Injectable({
@@ -14,6 +16,7 @@ const TOKEN_PREFIX = 'TOKEN';
 export class AuthService {
 
   private isAuthenticated$ = new BehaviorSubject(false);
+  private download$ = new BehaviorSubject(null);
   private token$ = new BehaviorSubject('');
   private username$ = new BehaviorSubject('');
 
@@ -21,22 +24,66 @@ export class AuthService {
     private localStorageService: LocalStorageService,
     private apiService: ApiService
   ) {
+    this.discovery();
 
-    this.apiService.dicover().subscribe((data: any) => {
-      if (data.result === 'true') {
-        const decodeToken: any = this.decodeToken(this.localStorageService.getItem(TOKEN_PREFIX));
-        if (decodeToken) {
-          this.username$.next(decodeToken.user);
-          this.isAuthenticated$.next(true);
-        } else {
-          this.isAuthenticated$.next(false);
-        }
+    this.download$.next(JSON.parse(this.localStorageService.getItem(DOWNLOAD_MANAGER)));
+    this.token$.next(this.localStorageService.getItem(TOKEN_PREFIX));
+
+    if (!this.isTokenExpired()) {
+      const decodeToken: any = this.decodeToken();
+
+      if (decodeToken) {
+        this.username$.next(decodeToken.user);
+        this.isAuthenticated$.next(true);
       }
-    });
+    }
+
   }
 
   public getUsername(): Observable<string> {
     return this.username$.asObservable();
+  }
+
+  public setDownload(data): void {
+    Object.keys(data.matchMng).forEach((key: any) => {
+      if (data.matchMng[key].type === 'dwnConsR') {
+        this.download$.next({manager: key, type: 'dwnConsR'});
+        return;
+      }
+    });
+  }
+
+  public discovery(): void {
+    this.apiService.dicover().subscribe((data: any) => {
+
+      if (data.result === 'true') {
+        Object.keys(data.matchMng).forEach((key: any) => {
+          if (data.matchMng[key].type === 'dwnConsR') {
+            return this.download$.next({manager: key, type: 'dwnConsR'});
+          }
+        });
+
+        if (!this.isTokenExpired()) {
+          const decodeToken: any = this.decodeToken();
+          if (decodeToken) {
+            this.username$.next(decodeToken.user);
+            this.isAuthenticated$.next(true);
+          }
+        } else {
+          this.isAuthenticated$.next(false);
+        }
+      }
+    }, (error: HttpErrorResponse) => {
+      alert(error.message);
+    });
+  }
+
+  public getDownloadAsync(): Observable<any> {
+    return this.download$.asObservable();
+  }
+
+  public getDownload(): any {
+    return this.download$.value;
   }
 
   public getToken(): string {
@@ -48,25 +95,27 @@ export class AuthService {
   }
 
   public authenticated(): boolean {
-    return this.isAuthenticated$.value;
+    return this.isAuthenticated$.value && (this.download$.value !== null);
   }
 
-  public login(token: string): string {
-    if (this.isTokenExpired()) {
+  public login(token: string): any {
+    if (token) {
       this.localStorageService.setItem(TOKEN_PREFIX, token);
-      const decodeToken: any = this.decodeToken(token);
-      this.username$.next(decodeToken.user);
+      this.localStorageService.setItem(DOWNLOAD_MANAGER, JSON.stringify(this.download$.value));
+      this.username$.next(this.decodeToken(token).user);
       this.isAuthenticated$.next(true);
-      return 'Loggin successful';
+      return {message: 'Login successfull!', status: true};
     } else {
-      return 'Token expired';
+      return {message: 'Token expired. Try again!', status: false};
     }
   }
 
   public logout(): void {
     this.localStorageService.removeItem(TOKEN_PREFIX);
+    this.localStorageService.removeItem(DOWNLOAD_MANAGER);
     this.isAuthenticated$.next(false);
     this.username$.next('');
+    this.download$.next(null);
   }
 
   private urlBase64Decode(str: string): string {

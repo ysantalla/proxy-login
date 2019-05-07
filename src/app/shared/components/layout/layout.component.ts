@@ -28,7 +28,7 @@ import { Menu } from '@app/core/models/menu.model';
           <span>{{appName}}</span>
         </mat-toolbar>
 
-        <app-nav-menu [items]="dashboard"></app-nav-menu>
+        <app-nav-menu *ngIf="(isLoggedIn$ | async)" [items]="dashboard"></app-nav-menu>
 
       </mat-sidenav>
       <mat-sidenav-content>

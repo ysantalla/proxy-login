@@ -17,7 +17,8 @@ import {
   MatSnackBarModule,
   MatListModule,
   MatExpansionModule,
-  MatGridListModule
+  MatGridListModule,
+  MatChipsModule
 
 } from '@angular/material';
 
@@ -48,6 +49,7 @@ import { SizePipe } from './pipes/size.pipe';
     MatListModule,
     MatExpansionModule,
     MatGridListModule,
+    MatChipsModule,
 
     RouterModule
   ],
@@ -72,6 +74,7 @@ import { SizePipe } from './pipes/size.pipe';
     MatListModule,
     MatExpansionModule,
     MatGridListModule,
+    MatChipsModule,
 
     LayoutComponent,
     SizePipe

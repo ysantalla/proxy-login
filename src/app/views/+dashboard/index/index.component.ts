@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '@app/core/services/auth.service';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
-
-import { environment as env } from '@env/environment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,21 +11,15 @@ import { environment as env } from '@env/environment';
 export class IndexComponent implements OnInit, OnDestroy {
 
   loading = false;
+  isLoggedIn$: Observable<boolean>;
 
   constructor(
     private authService: AuthService,
-    private snackBar: MatSnackBar,
-    private httpClient: HttpClient
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-
-    console.log(this.authService.getToken());
-
-    this.httpClient.post<any>(env.urlProxy, {cmd: 'get', manager: 'downWeek', secret: this.authService.getToken()}).subscribe(data => {
-      console.log(data);
-    });
-
+    this.isLoggedIn$ = this.authService.isAuthenticated();
   }
 
   ngOnDestroy(): void {
