@@ -5,6 +5,7 @@ import { SharedModule } from '@app/shared/shared.module';
 
 import { IndexComponent } from './index/index.component';
 import { AuthGuard } from '@app/core/guards/auth.guard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -19,6 +20,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     RouterModule.forChild(routes),
   ],

@@ -23,8 +23,8 @@ import { HttpErrorResponse } from '@angular/common/http';
           <mat-card class="user-details-card">
             <mat-card-content>
 
-              <mat-grid-list *ngIf="profile" cols="2" rowHeight="10:1">
-                <mat-grid-tile><h3 class="mat-h3">Nombre:</h3></mat-grid-tile>
+              <mat-grid-list *ngIf="profile" cols="2" rowHeight="60">
+                <mat-grid-tile><h3 class="mat-h3">Usuario:</h3></mat-grid-tile>
                 <mat-grid-tile><h3 class="mat-h3"> {{profile.name}}</h3></mat-grid-tile>
                 <mat-grid-tile><h3 class="mat-h3">Kuota:</h3></mat-grid-tile>
                 <mat-grid-tile><h3 class="mat-h3"> {{profile.quota}}</h3></mat-grid-tile>

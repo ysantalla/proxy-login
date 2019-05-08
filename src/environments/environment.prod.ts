@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  urlProxy: 'https://200.14.49.3/',
+  urlProxy: 'https://proxy.upr.edu.cu/',
+  directoryLink: 'http://directorio.upr.edu.cu/search',
   envName: 'Production',
   appName: 'PROXY-GO'
 };

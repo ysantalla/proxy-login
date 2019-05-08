@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   urlProxy: 'https://localhost:4443/api/cmd',
+  directoryLink: 'http://directorio.upr.edu.cu/search',
   envName: 'Development',
   appName: 'PROXY-GO'
 };

@@ -27,5 +27,36 @@ $accent: mat-palette($mat-light-blue);
 }
 
 .dashboard-card {
-  border-left: 6px solid mat-color($accent);
+  border-left: 6px solid mat-color($primary);
+}
+
+div.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.item-1 {
+  width: 70%;
+  height: 100%;
+  margin: 5px;
+  order: 2;
+  flex-grow: 1;
+}
+
+.item-2 {
+  width: 15%;
+  height: 100%;
+  margin: 5px;
+  order: 2;
+  flex-grow: 1;
+}
+
+.item {
+  flex-grow: 1;
 }

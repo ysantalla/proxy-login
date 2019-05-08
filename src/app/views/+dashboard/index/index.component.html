@@ -1,16 +1,102 @@
-<div class="grid-container">
-  <div class="container" *ngIf="(isLoggedIn$ | async)" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
-    <div class="item mat-elevation-z8" fxFlex="98%" fxFlex.xs="90%" fxFlex.md="90%">
+<div class="loading">
+  <mat-progress-bar *ngIf="loading" class="loading" color="warn"></mat-progress-bar>
+</div>
+<br />
 
-        <mat-toolbar class="card-toolbar" color="accent">
+<div class="grid-container">
+  <div class="container" *ngIf="(isLoggedIn$ | async)" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center start">
+    <div class="item mat-elevation-z8" fxFlex="55%" fxFlex.xs="100%" fxFlex.md="100%">
+
+        <mat-toolbar class="card-toolbar" color="primary">
             <mat-toolbar-row>
-              Consumo
+              Información de Consumo
             </mat-toolbar-row>
           </mat-toolbar>
 
         <mat-card class="dashboard-card">
           <mat-card-content class="dashboard-card-content">
+
+            <br />
+
+            <div class="container">
+
+              <mat-grid-list class="item-2" *ngIf="data" cols="2" rowHeight="60">
+
+                <mat-grid-tile><h2 class="mat-h2">Kuota:</h2></mat-grid-tile>
+                <mat-grid-tile><h3 class="mat-h3"> {{data.quota}}</h3></mat-grid-tile>
+                <mat-grid-tile><h2 class="mat-h2">Consumo:</h2></mat-grid-tile>
+                <mat-grid-tile><h3 class="mat-h3"> {{data.consumption}}</h3></mat-grid-tile>
+
+                <mat-grid-tile><h2 class="mat-h2">Grupos:</h2></mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-chip-list *ngFor="let role of data.groups">
+                    <mat-chip class="role" color="accent">{{role}}</mat-chip>
+                  </mat-chip-list>
+                </mat-grid-tile>
+
+              </mat-grid-list>
+
+              <mat-progress-spinner *ngIf="data"
+                class="item-1"
+                [color]="color"
+                [mode]="mode"
+                [value]="value"
+                [diameter]="230"
+                [strokeWidth]="120" >
+              </mat-progress-spinner>
+
+            </div>
+
+            <br />
+
           </mat-card-content>
+        </mat-card>
+    </div>
+
+    <br />
+
+    <div  *ngIf="isAdmin$ | async" class="item mat-elevation-z8" fxFlex="40%" fxFlex.xs="100%" fxFlex.md="100%">
+
+        <mat-toolbar class="card-toolbar" color="primary">
+            <mat-toolbar-row>
+              Reiniciar cuota a un usuario
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+        <mat-card class="dashboard-card">
+          <form [formGroup]="resetQuotaForm" #f="ngForm" (ngSubmit)="onReset()" class="form">
+            <mat-card-content class="dashboard-card-content">
+
+              <mat-form-field class='full-width'>
+                  <input
+                    type='text'
+                    placeholder='Escriba el nombre del profesor'
+                    aria-label='users'
+                    matInput
+                    formControlName='user'
+                    [matAutocomplete]='auto'
+                  />
+                  <mat-autocomplete
+                    #auto='matAutocomplete'
+                    [displayWith]='displayFn'
+                  >
+                    <mat-option
+                      *ngFor='let option of (filteredUsers | async)'
+                      [value]='option'
+                    >
+                      {{ option.firstname }} {{ option.lastname }} --- {{ option.username }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!resetQuotaForm.valid" aria-label="reset">
+                <mat-icon>lock</mat-icon>
+                <span>Reiniciar</span>
+              </button>
+            </mat-card-actions>
+          </form>
         </mat-card>
     </div>
 

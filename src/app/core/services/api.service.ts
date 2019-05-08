@@ -31,6 +31,15 @@ export class ApiService {
     return this.httpClient.post<any>(env.urlProxy, {cmd: 'get', manager: manager, secret: token});
   }
 
+  public renew(token: string): Observable<any> {
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'renew', manager: 'sessions', secret: token});
+  }
+
+  public set(token: string, user: string, Uint64: number, manager: string): Observable<any> {
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'set', manager: manager,
+              isAdmin: true, secret: token, string: user, uint64: Uint64});
+  }
+
   public logout(token: string): Observable<any> {
     return this.httpClient.post<any>(env.urlProxy, {cmd: 'close', manager: 'sessions', secret: token});
   }

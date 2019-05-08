@@ -71,10 +71,6 @@ div.container > div.loading, div.loading {
 
 }
 
-.create-button {
-  z-index: 1024;
-}
-
 .spacer {
   flex: 1 1 auto;
 }
@@ -83,9 +79,10 @@ div.container > div.loading, div.loading {
   overflow-x: hidden!important;
 }
 
-.table-footer {
-  background-color: white;
-  padding: 3px 3px 7px 7px;
+.mat-progress-spinner circle {
+  fill: #fafafa!important;
+  transform-origin: center;
+  transition: stroke-dashoffset 225ms linear;
 }
 
 /*Define the @font-face Material Icons*/
