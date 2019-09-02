@@ -55,51 +55,6 @@
 
     <br />
 
-    <div  *ngIf="isAdmin$ | async" class="item mat-elevation-z8" fxFlex="40%" fxFlex.xs="100%" fxFlex.md="100%">
-
-        <mat-toolbar class="card-toolbar" color="primary">
-            <mat-toolbar-row>
-              Reiniciar cuota a un usuario
-            </mat-toolbar-row>
-          </mat-toolbar>
-
-        <mat-card class="dashboard-card">
-          <form [formGroup]="resetQuotaForm" #f="ngForm" (ngSubmit)="onReset()" class="form">
-            <mat-card-content class="dashboard-card-content">
-
-              <mat-form-field class='full-width'>
-                  <input
-                    type='text'
-                    placeholder='Escriba el nombre del profesor'
-                    aria-label='users'
-                    matInput
-                    formControlName='user'
-                    [matAutocomplete]='auto'
-                  />
-                  <mat-autocomplete
-                    #auto='matAutocomplete'
-                    [displayWith]='displayFn'
-                  >
-                    <mat-option
-                      *ngFor='let option of (filteredUsers | async)'
-                      [value]='option'
-                    >
-                      {{ option.firstname }} {{ option.lastname }} --- {{ option.username }}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary" type="submit" [disabled]="!resetQuotaForm.valid" aria-label="reset">
-                <mat-icon>lock</mat-icon>
-                <span>Reiniciar</span>
-              </button>
-            </mat-card-actions>
-          </form>
-        </mat-card>
-    </div>
-
   <br/>
 
 </div>

@@ -13,7 +13,6 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { ApiService } from './services/api.service';
 import { RedirectGuard } from './guards/redirect.guard';
-import { DirectoryService } from './services/directory.service';
 
 
 @NgModule({
@@ -25,7 +24,6 @@ import { DirectoryService } from './services/directory.service';
     AuthGuard,
     RedirectGuard,
     AuthService,
-    DirectoryService,
     ApiService
   ],
   declarations: []

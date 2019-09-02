@@ -104,9 +104,9 @@ export class AuthService {
       this.localStorageService.setItem(DOWNLOAD_MANAGER, JSON.stringify(this.download$.value));
       this.username$.next(this.decodeToken(token).user);
       this.isAuthenticated$.next(true);
-      return {message: 'Login successfull!', status: true};
+      return {message: 'Usted se ha logueado en el proxy!', status: true};
     } else {
-      return {message: 'Token expired. Try again!', status: false};
+      return {message: 'Su sesión ha expirado, pruebe nuevamente', status: false};
     }
   }
 
