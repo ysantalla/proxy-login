@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: 'unauthorized',
     component: UnauthorizedComponent,
-    data: {title: 'Unauthorized'}
+    data: {title: 'No authorizado'}
   }
 ];
 

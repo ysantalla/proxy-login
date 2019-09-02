@@ -30,6 +30,8 @@ import { Menu } from '@app/core/models/menu.model';
 
         <app-nav-menu *ngIf="(isLoggedIn$ | async)" [items]="dashboard"></app-nav-menu>
 
+        <app-nav-menu [items]="about"></app-nav-menu>
+
       </mat-sidenav>
       <mat-sidenav-content>
         <mat-toolbar class="navbar" color="primary">
@@ -173,6 +175,7 @@ export class LayoutComponent implements OnInit {
   username$: Observable<string>;
 
   dashboard: Menu;
+  about: Menu;
 
   envName = env.envName;
   appName = env.appName;
@@ -194,6 +197,13 @@ export class LayoutComponent implements OnInit {
       heading: 'Escritorio',
       icon: 'dashboard',
       link: '/dashboard',
+      pages: []
+    };
+
+    this.about = {
+      heading: 'Acerca de',
+      icon: 'person',
+      link: '/about',
       pages: []
     };
 

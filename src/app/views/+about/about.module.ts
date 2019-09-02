@@ -6,12 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from './index/index.component';
 
 
-
 const routes: Routes = [
   {
-    path: 'about',
+    path: '',
     component: IndexComponent,
-    data: {title: 'No authorizado'}
+    data: {title: 'Acerca de'}
   }
 ];
 

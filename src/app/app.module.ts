@@ -26,6 +26,10 @@ const routes: Routes = [
     loadChildren: './views/+auth/auth.module#AuthModule',
   },
   {
+    path: 'about',
+    loadChildren: './views/+about/about.module#AboutModule',
+  },
+  {
     path: 'dashboard',
     loadChildren: './views/+dashboard/dashboard.module#DashboardModule',
     canLoad: [AuthGuard]
