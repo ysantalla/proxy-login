@@ -14,8 +14,7 @@ import { Menu } from '@app/core/models/menu.model';
             match up the styling to the expansion panel styles -->
           <a class="menu" mat-list-item *ngIf="items.pages.length === 0"
               [routerLink]="items.link"
-              routerLinkActive="active"
-              (click)="accordion.closeAll()">
+              routerLinkActive="active">
               <mat-icon>{{items.icon}}</mat-icon>
               <span class="nav-link-text">{{items.heading}}</span>
           </a>
@@ -72,7 +71,6 @@ import { Menu } from '@app/core/models/menu.model';
 export class NavMenuComponent implements OnInit {
 
   @Input() items: Menu;
-  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   constructor() {}
 
