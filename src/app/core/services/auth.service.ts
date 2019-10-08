@@ -46,8 +46,8 @@ export class AuthService {
 
   public setDownload(data): void {
     Object.keys(data.matchMng).forEach((key: any) => {
-      if (data.matchMng[key].type === 'DwnConsR') {
-        this.download$.next({manager: key, type: 'DwnConsR'});
+      if (data.matchMng[key].type === 'dwnConsR') {
+        this.download$.next({manager: key, type: 'dwnConsR'});
         return;
       }
     });
@@ -58,8 +58,8 @@ export class AuthService {
 
       if (data.result === 'true') {
         Object.keys(data.matchMng).forEach((key: any) => {
-          if (data.matchMng[key].type === 'DwnConsR') {
-            return this.download$.next({manager: key, type: 'DwnConsR'});
+          if (data.matchMng[key].type === 'dwnConsR') {
+            return this.download$.next({manager: key, type: 'dwnConsR'});
           }
         });
 
