@@ -15,7 +15,7 @@ export class ApiService {
   ) { }
 
   public dicover(): Observable<any> {
-    return this.httpClient.post<any>(env.urlProxy, {cmd: 'discover', manager: 'resources'});
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'discover', manager: 'rules'});
   }
 
   public login(user: string, pass: string): Observable<any> {

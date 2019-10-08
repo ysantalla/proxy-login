@@ -46,8 +46,8 @@ export class AuthService {
 
   public setDownload(data): void {
     Object.keys(data.matchMng).forEach((key: any) => {
-      if (data.matchMng[key].type === 'dwnConsR') {
-        this.download$.next({manager: key, type: 'dwnConsR'});
+      if (data.matchMng[key].type === 'DwnConsR') {
+        this.download$.next({manager: key, type: 'DwnConsR'});
         return;
       }
     });
@@ -58,13 +58,14 @@ export class AuthService {
 
       if (data.result === 'true') {
         Object.keys(data.matchMng).forEach((key: any) => {
-          if (data.matchMng[key].type === 'dwnConsR') {
-            return this.download$.next({manager: key, type: 'dwnConsR'});
+          if (data.matchMng[key].type === 'DwnConsR') {
+            return this.download$.next({manager: key, type: 'DwnConsR'});
           }
         });
 
         if (!this.isTokenExpired()) {
           const decodeToken: any = this.decodeToken();
+
           if (decodeToken) {
             this.username$.next(decodeToken.user);
             this.isAuthenticated$.next(true);
@@ -74,7 +75,7 @@ export class AuthService {
         }
       }
     }, (error: HttpErrorResponse) => {
-      alert(error.message);
+      console.log(error.message);
     });
   }
 
@@ -115,7 +116,8 @@ export class AuthService {
     this.localStorageService.removeItem(DOWNLOAD_MANAGER);
     this.isAuthenticated$.next(false);
     this.username$.next('');
-    this.download$.next(null);
+    this.download$.next('');
+    this.apiService.logout(this.token$.value)
   }
 
   private urlBase64Decode(str: string): string {

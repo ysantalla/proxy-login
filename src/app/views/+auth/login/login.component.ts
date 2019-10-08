@@ -137,7 +137,7 @@ export class LoginComponent implements OnInit {
         this.loading = false;
 
         if (error.status === 400) {
-          this.snackBar.open(error.error, 'X', {duration: 3000});
+          this.snackBar.open("Usuario o contraseña incorrecto", 'X', {duration: 3000});
         } else {
           this.snackBar.open(error.message, 'X', {duration: 3000});
         }
