@@ -22,7 +22,7 @@ import { Menu } from '@app/core/models/menu.model';
         fixedInViewport="false"
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="!(isHandset$ | async) && (isLoggedIn$ | async)">
+        [opened]="(isHandset$ | async) === false && (isLoggedIn$ | async)">
         <mat-toolbar class="sidenav-navbar" color="primary">
           <img class="logo" src="assets/logo_64x64.png" />
           <span>{{appName}}</span>
@@ -30,7 +30,7 @@ import { Menu } from '@app/core/models/menu.model';
 
         <app-nav-menu *ngIf="(isLoggedIn$ | async)" [items]="dashboard"></app-nav-menu>
 
-        <app-nav-menu [items]="about"></app-nav-menu>
+        <app-nav-menu *ngIf="(isLoggedIn$ | async) === false" [items]="about"></app-nav-menu>
 
       </mat-sidenav>
       <mat-sidenav-content>
@@ -44,7 +44,7 @@ import { Menu } from '@app/core/models/menu.model';
               <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
-            <span *ngIf="!(isHandset$ | async)">{{appName}}</span>
+            <span *ngIf="(isHandset$ | async) === false">{{appName}}</span>
 
             <span class="spacer"></span>
 
@@ -58,11 +58,6 @@ import { Menu } from '@app/core/models/menu.model';
                 <span>Cambiar Contraseña</span>
               </a>
 
-              <button mat-menu-item *ngIf="isLoggedIn$ | async" routerLink="auth/profile">
-                <mat-icon>person</mat-icon>
-                <span>Perfil</span>
-              </button>
-
               <mat-divider *ngIf="isLoggedIn$ | async"></mat-divider>
 
               <button mat-menu-item *ngIf="isLoggedIn$ | async"  (click)="logout()">
@@ -70,7 +65,7 @@ import { Menu } from '@app/core/models/menu.model';
                 <span>Cerrar Sesión</span>
               </button>
 
-              <button mat-menu-item *ngIf="!(isLoggedIn$ | async)" routerLink="auth/login">
+              <button mat-menu-item *ngIf="(isLoggedIn$ | async) === false" routerLink="auth/login">
                 <mat-icon>lock_open</mat-icon>
                 <span>Iniciar Sesión</span>
               </button>

@@ -3,7 +3,10 @@ import { Observable, interval } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { environment as env } from '@env/environment';
+import { LocalStorageService } from './local-storage.service';
 
+
+const TOKEN_PREFIX = 'TOKEN';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,8 @@ import { environment as env } from '@env/environment';
 export class ApiService {
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private localStorageService: LocalStorageService,
   ) { }
 
   public dicover(): Observable<any> {
@@ -23,20 +27,27 @@ export class ApiService {
       responseType: 'text'
     };
 
-    return this.httpClient.post<any>(env.urlProxy, {cmd: 'open', manager: 'sessions', cred: {user: user, pass: pass}},
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'open', manager: 'sessions', cred: {user, pass}},
         requestOptions);
   }
 
   public comandGet(manager: string, token: string): Observable<any> {
-    return this.httpClient.post<any>(env.urlProxy, {cmd: 'get', manager: manager, secret: token});
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'get', manager, secret: token});
   }
 
-  public renew(token: string): Observable<any> {
-    return this.httpClient.post<any>(env.urlProxy, {cmd: 'renew', manager: 'sessions', secret: token});
+  public renew(): void {
+    const token = this.localStorageService.getItem(TOKEN_PREFIX);
+    const requestOptions: any = {
+      responseType: 'text'
+    };
+    this.httpClient.post<any>(env.urlProxy, {cmd: 'renew', manager: 'sessions',
+                   secret: token}, requestOptions).subscribe((newToken: any) => {
+      this.localStorageService.setItem(TOKEN_PREFIX, newToken);
+    });
   }
 
   public set(token: string, user: string, Uint64: number, manager: string): Observable<any> {
-    return this.httpClient.post<any>(env.urlProxy, {cmd: 'set', manager: manager,
+    return this.httpClient.post<any>(env.urlProxy, {cmd: 'set', manager,
               isAdmin: true, secret: token, string: user, uint64: Uint64});
   }
 

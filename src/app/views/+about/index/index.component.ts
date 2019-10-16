@@ -36,40 +36,6 @@ import { Component, OnInit } from "@angular/core";
                                   |___/
 </code></pre>
                 <p>
-                  <a href="https://github.com/lamg/pmproxy/blob/master/LICENSE"
-                    ><img
-                      src="https://camo.githubusercontent.com/bca523fe54c1f5d8b3def90208f4cb1fc7cb1be2/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d4147504c253230332532422d626c75652e737667"
-                      alt="License Badge"
-                      data-canonical-src="https://img.shields.io/badge/License-AGPL%203%2B-blue.svg"
-                      style="max-width:100%;"
-                  /></a>
-                  <a href="https://travis-ci.com/lamg/pmproxy" rel="nofollow"
-                    ><img
-                      src="https://camo.githubusercontent.com/734878d9c165dc0d3e226b20ea0f75db50fc3f30/68747470733a2f2f7472617669732d63692e636f6d2f6c616d672f706d70726f78792e7376673f6272616e63683d6d6173746572"
-                      alt="Build Status"
-                      data-canonical-src="https://travis-ci.com/lamg/pmproxy.svg?branch=master"
-                      style="max-width:100%;"
-                  /></a>
-                  <a
-                    href="https://coveralls.io/github/lamg/pmproxy?branch=master"
-                    rel="nofollow"
-                    ><img
-                      src="https://camo.githubusercontent.com/8ac32eb3a7fe083e2935bb68aa9f5655eb056f00/68747470733a2f2f636f766572616c6c732e696f2f7265706f732f6769746875622f6c616d672f706d70726f78792f62616467652e7376673f6272616e63683d6d6173746572"
-                      alt="Coverage Status"
-                      data-canonical-src="https://coveralls.io/repos/github/lamg/pmproxy/badge.svg?branch=master"
-                      style="max-width:100%;"
-                  /></a>
-                  <a
-                    href="https://goreportcard.com/report/github.com/lamg/pmproxy"
-                    rel="nofollow"
-                    ><img
-                      src="https://camo.githubusercontent.com/90cf83f82f48504969498d110ba0db0100fd337c/68747470733a2f2f676f7265706f7274636172642e636f6d2f62616467652f6769746875622e636f6d2f6c616d672f706d70726f7879"
-                      alt="Go Report Card"
-                      data-canonical-src="https://goreportcard.com/badge/github.com/lamg/pmproxy"
-                      style="max-width:100%;"
-                  /></a>
-                </p>
-                <p>
                   PMProxy wraps an HTTP proxy server with procedures that
                   process each HTTP request according information it carries and
                   a set of rules.

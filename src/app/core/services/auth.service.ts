@@ -1,7 +1,7 @@
 // tslint:disable:no-bitwise
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, interval } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,10 +20,13 @@ export class AuthService {
   private token$ = new BehaviorSubject('');
   private username$ = new BehaviorSubject('');
 
+  subcription: Subscription;
+
   constructor(
     private localStorageService: LocalStorageService,
     private apiService: ApiService
   ) {
+
     this.discovery();
 
     this.download$.next(JSON.parse(this.localStorageService.getItem(DOWNLOAD_MANAGER)));
@@ -117,7 +120,7 @@ export class AuthService {
     this.isAuthenticated$.next(false);
     this.username$.next('');
     this.download$.next('');
-    this.apiService.logout(this.token$.value)
+    this.apiService.logout(this.token$.value);
   }
 
   private urlBase64Decode(str: string): string {

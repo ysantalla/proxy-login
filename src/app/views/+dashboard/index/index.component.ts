@@ -46,7 +46,8 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     });
 
-    this.subcription = interval(5000).subscribe(index => {
+    this.subcription = interval(20000).subscribe(index => {
+
       this.apiService.comandGet(this.authService.getDownload().manager, this.authService.getToken()).subscribe((data: any) => {
         this.value = data.bytesCons * 100 / data.bytesQuota;
         this.data = data;

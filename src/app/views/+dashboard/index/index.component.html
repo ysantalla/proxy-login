@@ -5,7 +5,7 @@
 
 <div class="grid-container">
   <div class="container" *ngIf="(isLoggedIn$ | async)" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center start">
-    <div class="item mat-elevation-z8" fxFlex="55%" fxFlex.xs="100%" fxFlex.md="100%">
+    <div class="item mat-elevation-z8" fxFlex="90%" fxFlex.xs="100%" fxFlex.md="100%">
 
         <mat-toolbar class="card-toolbar" color="primary">
             <mat-toolbar-row>
@@ -26,13 +26,6 @@
                 <mat-grid-tile><h3 class="mat-h3"> {{data.quota}}</h3></mat-grid-tile>
                 <mat-grid-tile><h2 class="mat-h2">Consumo:</h2></mat-grid-tile>
                 <mat-grid-tile><h3 class="mat-h3"> {{data.consumption}}</h3></mat-grid-tile>
-
-                <mat-grid-tile><h2 class="mat-h2">Grupos:</h2></mat-grid-tile>
-                <mat-grid-tile>
-                  <mat-chip-list *ngFor="let role of data.groups">
-                    <mat-chip class="role" color="accent">{{role}}</mat-chip>
-                  </mat-chip-list>
-                </mat-grid-tile>
 
               </mat-grid-list>
 

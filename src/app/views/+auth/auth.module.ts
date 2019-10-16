@@ -6,7 +6,6 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
-import { ProfileComponent } from './profile/profile.component';
 import { RedirectGuard } from '@app/core/guards/redirect.guard';
 
 const routes: Routes = [
@@ -22,12 +21,6 @@ const routes: Routes = [
     data: {title: 'Iniciar Sesión'},
     canActivate: [RedirectGuard]
   },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    data: {title: 'Pérfil'},
-    canActivate: [AuthGuard]
-  },
 ];
 
 @NgModule({
@@ -38,6 +31,6 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginComponent, ProfileComponent]
+  declarations: [LoginComponent]
 })
 export class AuthModule { }
