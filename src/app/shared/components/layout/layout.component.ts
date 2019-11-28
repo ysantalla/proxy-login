@@ -53,10 +53,6 @@ import { Menu } from '@app/core/models/menu.model';
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <a mat-menu-item *ngIf="isLoggedIn$ | async" target="_blank" href="https://clave.upr.edu.cu/iisadmpwd/">
-                <mat-icon>lock_open</mat-icon>
-                <span>Cambiar Contraseña</span>
-              </a>
 
               <mat-divider *ngIf="isLoggedIn$ | async"></mat-divider>
 
